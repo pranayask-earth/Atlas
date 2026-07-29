@@ -1,0 +1,1 @@
+print("Atlas is alive.")
