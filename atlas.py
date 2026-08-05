@@ -4,5 +4,14 @@ result = subprocess.run(
 capture_output=True, 
 text=True
 )
-print(result.stdout)
-
+lines = result.stdout.strip().split("\n")
+commits = []
+for line in lines:
+    parts = line.split("|")
+    commit = {
+        "hash": parts[0],
+        "date": parts[1],
+        "message": parts[2]
+    }
+    commits.append(commit)
+print(commits)
