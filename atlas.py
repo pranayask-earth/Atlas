@@ -38,6 +38,18 @@ for commit in commits:
     if commit["date"] >= cutoff_date:
         recent_commits.append(commit)
 
+file_counts = {}
+for commit in recent_commits:
+    for filename in commit["files"]:
+        if filename in file_counts:
+            file_counts[filename] = file_counts[filename] + 1
+        else:
+            file_counts[filename] = 1
+
+if file_counts:
+    top_file = max(file_counts, key=file_counts.get)
+    top_count = file_counts[top_file]
+
 commit_count = len(recent_commits)
 
 print(f"Since {cutoff_date}:")
@@ -46,6 +58,7 @@ print(f"  • {commit_count} commits")
 if commit_count > 0:
    most_recent = recent_commits[0]
    print(f"  • Most recent: \"{most_recent['message']}\"")
+   print(f"  • Where to start: {top_file} ({top_count} recent commits)")
 else:
     print(f"  • Nothing new. You're all caught up!")
 
