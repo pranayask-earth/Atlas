@@ -20,11 +20,12 @@ recent_commits = []
 for commit in commits:
     if commit["date"] >= cutoff_date:
         recent_commits.append(commit)
+
 commit_count = len(recent_commits)
 print(f"Since {cutoff_date}:")
-print(f"  • {commit_count} commits")
+print(f" • {commit_count} commits")
 if commit_count > 0:
-   most_recent = recent_commits[0]
-   print(f"  • Most recent: \"{most_recent['message']}\"")
+    most_recent = recent_commits[0]
+    print(f" • Most recent: \"{most_recent['message']}\"")
 else:
-    print(f"  • Nothing new. You're all caught up!")
+    print(" • Nothing new. You're all caught up!")
