@@ -3,8 +3,10 @@ import datetime
 try:
     with open(".git/atlas_checkpoint", "r") as f:
         cutoff_date = f.read().strip()
+    first_run = False
 except FileNotFoundError:
      cutoff_date = "2000-01-01"
+     first_run = True
 
 result = subprocess.run(
     ["git", "log", "--pretty=format:==COMMIT==%n%H|%ad|%s", "--name-only", "--date=short"],
@@ -52,7 +54,10 @@ if file_counts:
 
 commit_count = len(recent_commits)
 
-print(f"Since {cutoff_date}:")
+if first_run:
+    print("First time using Atlas here - showing your full history:")
+else:
+    print(f"Since {cutoff_date}:")
 print(f"  • {commit_count} commits")
 
 if commit_count > 0:
