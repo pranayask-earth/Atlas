@@ -7,20 +7,29 @@ except FileNotFoundError:
      cutoff_date = "2000-01-01"
 
 result = subprocess.run(
-    ["git", "log", "--pretty=format:%H|%ad|%s", "--date=short"],
+    ["git", "log", "--pretty=format:==COMMIT==%n%H|%ad|%s", "--name-only", "--date=short"],
     capture_output=True,
     text=True
 )
 
-lines = result.stdout.strip().split("\n")
+blocks = result.stdout.strip().split("==COMMIT==")
 
 commits = []
-for line in lines:
-    parts = line.split("|")
+for block in blocks:
+    block = block.strip()
+    if block == "":
+         continue
+    block_lines = block.split("\n")
+    header = block_lines[0]
+    parts = header.split("|")
+
+    files = block_lines[1:]
+
     commit = {
         "hash": parts[0],
         "date": parts[1],
-        "message": parts[2]
+        "message": parts[2],
+        "files": files
     }
     commits.append(commit)
 
