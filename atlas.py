@@ -1,12 +1,19 @@
 import subprocess
-import sys
-cutoff_date = sys.argv[1]
+import datetime
+try:
+    with open(".git/atlas_checkpoint", "r") as f:
+        cutoff_date = f.read().strip()
+except FileNotFoundError:
+     cutoff_date = "2000-01-01"
+
 result = subprocess.run(
     ["git", "log", "--pretty=format:%H|%ad|%s", "--date=short"],
     capture_output=True,
     text=True
 )
+
 lines = result.stdout.strip().split("\n")
+
 commits = []
 for line in lines:
     parts = line.split("|")
@@ -16,15 +23,23 @@ for line in lines:
         "message": parts[2]
     }
     commits.append(commit)
+
 recent_commits = []
 for commit in commits:
     if commit["date"] >= cutoff_date:
         recent_commits.append(commit)
+
 commit_count = len(recent_commits)
+
 print(f"Since {cutoff_date}:")
 print(f"  • {commit_count} commits")
+
 if commit_count > 0:
    most_recent = recent_commits[0]
    print(f"  • Most recent: \"{most_recent['message']}\"")
 else:
     print(f"  • Nothing new. You're all caught up!")
+
+today = datetime.date.today().isoformat()
+with open(".git/atlas_checkpoint", "w") as f:
+     f.write(today)

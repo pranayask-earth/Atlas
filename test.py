@@ -1,3 +1,3 @@
-for i in range(3):
-    print("inside the loop")
-print("outside the loop")
+with open(".git/atlas_checkpoint", "r") as f:
+    saved_date = f.read()
+print(saved_date)
