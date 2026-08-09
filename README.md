@@ -23,3 +23,5 @@ First time using Atlas here - showing your full history:
 - Nested git repositories (a `.git` folder inside another tracked folder)
   aren't fully supported yet — Atlas should be run from inside the actual
   repo you want a summary for.
+test
+test
