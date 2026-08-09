@@ -27,7 +27,7 @@ for block in blocks:
          continue
     block_lines = block.split("\n")
     header = block_lines[0]
-    parts = header.split("|")
+    parts = header.split("|", 2)
 
     files = block_lines[1:]
 
