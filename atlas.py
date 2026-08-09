@@ -15,7 +15,7 @@ result = subprocess.run(
 )
 
 if result.returncode !=0:
-    print("This doesn't look like a git repository. Run Atlas from inside a project with git initialized.")
+    print("Couldn't read git history here. Make sure this is a git repository with at least one commit.")
     exit()
 
 blocks = result.stdout.strip().split("==COMMIT==")
