@@ -14,6 +14,10 @@ result = subprocess.run(
     text=True
 )
 
+if result.returncode !=0:
+    print("This doesn't look like a git repository. Run Atlas from inside a project with git initialized.")
+    exit()
+
 blocks = result.stdout.strip().split("==COMMIT==")
 
 commits = []
