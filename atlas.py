@@ -62,7 +62,12 @@ if first_run:
     print("First time using Atlas here - showing your full history:")
 else:
     print(f"Since {cutoff_date}:")
-print(f"  • {commit_count} commits")
+if commit_count == 1:
+    word = "commit"
+else:
+    word = "commits"
+
+print(f"  • {commit_count} {word}")
 
 if commit_count > 0:
    most_recent = recent_commits[0]
