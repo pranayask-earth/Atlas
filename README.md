@@ -4,8 +4,7 @@ Atlas: a tool that tells you where you left off.
 
 1. Clone this repo: git clone https://github.com/pranayask-earth/Atlas.git
 2. Make it runnable: 
-      cd Atlas
-      chmod +x atlas.py
+      i) cd Atlas , ii) chmod +x atlas.py
 3. Run it directly from inside any git repository you want a summary for: python3 /path/to/Atlas/atlas.py
 
 (A simpler one-command install is coming soon — for now, this is the
