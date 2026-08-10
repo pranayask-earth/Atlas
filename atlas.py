@@ -79,8 +79,16 @@ print(f"  • {commit_count} {word}")
 if commit_count > 0:
    most_recent = recent_commits[0]
    print(f"  • Most recent: \"{most_recent['message']}\"")
+   
+   if commit_count > 5:
+       next_few = recent_commits[1:4]
+       for c in next_few:
+           print(f"  • Also recent: \"{c['message']}\"")
+       remaining = commit_count - 4
+       print(f"  • ...and {remaining} earlier commits")
+
    if file_counts:
-        print(f"  • Where to start: {top_file} ({top_count} recent commits)")
+       print(f"  • Where to start: {top_file} ({top_count} recent commits)")
 else:
     print(f"  • Nothing new. You're all caught up!")
 
