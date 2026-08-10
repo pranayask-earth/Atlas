@@ -100,7 +100,7 @@ if commit_count > 0:
    if file_counts:
        print(f"  • Where to start: {top_file} ({top_count} recent commits)")
 else:
-    print(f"  • Nothing new. You're all caught up!")
+    print(f"  • Nothing new since you last checked. You're fully caught up - safe to continue!")
 
 today = datetime.date.today().isoformat()
 with open(".git/atlas_checkpoint", "w") as f:
