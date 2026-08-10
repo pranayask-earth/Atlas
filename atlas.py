@@ -60,9 +60,15 @@ if file_counts:
 commit_count = len(recent_commits)
 
 if first_run:
-    print("First time using Atlas here - showing your full history:")
+    print("Welcome to Atlas.")
+    print()
+    print("This is your first run here - Atlas will remember this moment,")
+    print("so next time it only shows what's changed since now.")
+    print()
+    print("Here's your full history so far:")
 else:
     print(f"Since {cutoff_date}:")
+
 if commit_count == 1:
     word = "commit"
 else:
@@ -73,7 +79,8 @@ print(f"  • {commit_count} {word}")
 if commit_count > 0:
    most_recent = recent_commits[0]
    print(f"  • Most recent: \"{most_recent['message']}\"")
-   print(f"  • Where to start: {top_file} ({top_count} recent commits)")
+   if file_counts:
+        print(f"  • Where to start: {top_file} ({top_count} recent commits)")
 else:
     print(f"  • Nothing new. You're all caught up!")
 
