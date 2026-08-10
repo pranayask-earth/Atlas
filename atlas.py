@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 import subprocess
 import datetime
+import sys
+if len(sys.argv) > 1 and sys.argv[1] == "--help":
+    print("Atlas - see what changed since you last worked on this project.")
+    print()
+    print("Usage: atlas")
+    print("Run it from inside any git repository. No arguments needed.")
+    print("Atlas remembers your last checkpoint automatically.")
+    exit()
+
 try:
     with open(".git/atlas_checkpoint", "r") as f:
         cutoff_date = f.read().strip()
@@ -64,6 +73,7 @@ if first_run:
     print()
     print("This is your first run here - Atlas will remember this moment,")
     print("so next time it only shows what's changed since now.")
+    print("(Run 'atlas --help' anytime to see this again.)")
     print()
     print("Here's your full history so far:")
 else:
