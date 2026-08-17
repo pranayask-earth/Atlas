@@ -8,7 +8,7 @@ if len(sys.argv) > 1 and sys.argv[1] == "--help":
     print("Usage: atlas")
     print("Run it from inside any git repository. No arguments needed.")
     print("Atlas remembers your last checkpoint automatically.")
-    exit()
+    sys.exit()
 
 try:
     with open(".git/atlas_checkpoint", "r") as f:
@@ -26,7 +26,7 @@ result = subprocess.run(
 
 if result.returncode !=0:
     print("Couldn't read git history here. Make sure this is a git repository with at least one commit.")
-    exit()
+    sys.exit()
 
 blocks = result.stdout.strip().split("==COMMIT==")
 
