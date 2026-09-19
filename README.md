@@ -11,6 +11,8 @@ Atlas: a tool that tells you where you left off.
    python3 /path/to/Atlas/atlas.py
 ```
 
+A standalone packaged binary (no Python required) is available via
+GitHub Releases — see the Releases page for the latest download.
 (A simpler one-command install is coming soon.)
 
 ## Optional: use `atlas` as a short command
