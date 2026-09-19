@@ -1,5 +1,10 @@
 Atlas: a tool that tells you where you left off.
 
+
+## Requirements
+
+- [Git](https://git-scm.com/downloads) must be installed on your system.
+
 ## Quickstart
 
 1. Clone this repo:
