@@ -2,6 +2,7 @@
 import subprocess
 import datetime
 import sys
+
 if len(sys.argv) > 1 and sys.argv[1] == "--help":
     print("Atlas - see what changed since you last worked on this project.")
     print()
@@ -15,16 +16,20 @@ try:
         cutoff_date = f.read().strip()
     first_run = False
 except FileNotFoundError:
-     cutoff_date = "2000-01-01"
-     first_run = True
+    cutoff_date = "2000-01-01"
+    first_run = True
 
-result = subprocess.run(
-    ["git", "log", "--pretty=format:==COMMIT==%n%H|%ad|%s", "--name-only", "--date=short"],
-    capture_output=True,
-    text=True
-)
+try:
+    result = subprocess.run(
+        ["git", "log", "--pretty=format:==COMMIT==%n%H|%ad|%s", "--name-only", "--date=short"],
+        capture_output=True,
+        text=True
+    )
+except FileNotFoundError:
+    print("Git isn't installed on this system. Install it from https://git-scm.com/downloads and try again.")
+    sys.exit()
 
-if result.returncode !=0:
+if result.returncode != 0:
     print("Couldn't read git history here. Make sure this is a git repository with at least one commit.")
     sys.exit()
 
@@ -34,13 +39,11 @@ commits = []
 for block in blocks:
     block = block.strip()
     if block == "":
-         continue
+        continue
     block_lines = block.split("\n")
     header = block_lines[0]
     parts = header.split("|", 2)
-
     files = block_lines[1:]
-
     commit = {
         "hash": parts[0],
         "date": parts[1],
@@ -87,21 +90,21 @@ else:
 print(f"  • {commit_count} {word}")
 
 if commit_count > 0:
-   most_recent = recent_commits[0]
-   print(f"  • Most recent: \"{most_recent['message']}\"")
-   
-   if commit_count > 5:
-       next_few = recent_commits[1:4]
-       for c in next_few:
-           print(f"  • Also recent: \"{c['message']}\"")
-       remaining = commit_count - 4
-       print(f"  • ...and {remaining} earlier commits")
+    most_recent = recent_commits[0]
+    print(f"  • Most recent: \"{most_recent['message']}\"")
 
-   if file_counts:
-       print(f"  • Where to start: {top_file} ({top_count} recent commits)")
+    if commit_count > 5:
+        next_few = recent_commits[1:4]
+        for c in next_few:
+            print(f"  • Also recent: \"{c['message']}\"")
+        remaining = commit_count - 4
+        print(f"  • ...and {remaining} earlier commits")
+
+    if file_counts:
+        print(f"  • Where to start: {top_file} ({top_count} recent commits)")
 else:
-    print(f"  • Nothing new since you last checked. You're fully caught up - safe to continue!")
+    print("  • Nothing new since you last checked. You're fully caught up - safe to continue!")
 
 today = datetime.date.today().isoformat()
 with open(".git/atlas_checkpoint", "w") as f:
-     f.write(today)
+    f.write(today)
